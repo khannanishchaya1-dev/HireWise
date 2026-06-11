@@ -16,7 +16,7 @@ try{
   const hashedPassword = await bcrypt.hash(password, 10);
   const newUser = await User.create({username,email,password: hashedPassword});
   if(newUser){
-    const token = jwt.sign({id: newUser._id, username: newUser.username} , process.env.SECRET_KEY, {expiresIn: '1d'});
+    const token = jwt.sign({id: newUser._id, username: newUser.username, email: newUser.email} , process.env.SECRET_KEY, {expiresIn: '1d'});
     res.cookie('token', token, {
       httpOnly: true,
     });
@@ -34,15 +34,18 @@ const login = async (req,res)=>{
     if(!username || !password){
       return res.status(400).json({message: 'Username and password are required'});
     }
-    const user = await User.findOne({username});
+    const user = await User.findOne({username}).select('+password');
     if(!user){
       return res.status(400).json({message: 'Invalid username'});
   }
   const isMatch = await bcrypt.compare(password, user.password);
   if(!isMatch){
+  
     return res.status(400).json({message: 'Invalid password'});
   }
-  const token = jwt.sign({id: user._id, username: user.username} , process.env.SECRET_KEY, {expiresIn: '1d'});
+ 
+  
+  const token = jwt.sign({id: user._id, username: user.username, email: user.email} , process.env.SECRET_KEY, {expiresIn: '1d'});
   res.cookie('token', token,{
     httpOnly: true,
   });
@@ -52,14 +55,29 @@ return res.status(500).json({message: 'Internal server error'});
 }
 }
 const logout = async (req,res)=>{
+  try{
   const token = req.cookies.token;
+  
   if(!token){
     return res.status(400).json({message: 'No token provided'});
 }
-await redis.set(`blacklist_${token}`,"true",{ex: 24*60*60});
+const decoded = jwt.decode(token);
+  const expiry =
+  decoded.exp - Math.floor(Date.now() / 1000);
+await redis.set(`blacklist_${token}`,"true",{ex:expiry});
 res.clearCookie('token');
 return res.status(200).json({message: 'Logout successful'});
+  }catch(error){
+    console.error('Error during logout:', error);
+    return res.status(500).json({message: 'Internal server error'});
 
 }
-
-module.exports = {register, login, logout};
+}
+const getMe = async (req,res)=>{
+  const user = await User.findById(req.user.id);
+  if(!user){
+    return res.status(404).json({message: 'User not found'});
+}
+return res.status(200).json({user});
+}
+module.exports = {register, login, logout, getMe};
