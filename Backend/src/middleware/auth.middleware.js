@@ -5,6 +5,7 @@ async function authMiddleware(req,res,next){
   try{
     const token = req.cookies.token || req.headers['Authorization']?.split(' ')[1];
     if(!token){
+      console.log('No token provided');
       return res.status(401).json({message: 'No token provided'});
     }
     const isBlacklisted = await redis.get(`blacklist_${token}`);

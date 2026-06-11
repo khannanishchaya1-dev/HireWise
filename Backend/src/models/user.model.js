@@ -16,6 +16,11 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Password is required'],
     minlength: [6, 'Password must be at least 6 characters long'],
     select: false,
+  },
+  age:{
+    type: Number,
+    required: [true, 'Age is required'],
+      min: [13, 'You must be at least 13 years old to register'],
   }
 },{timestamps: true})
 const User = mongoose.model('User',userSchema);

@@ -17,7 +17,7 @@ const Navbar = () => {
         </div>
 
         <button className="bg-[#00ED64] text-black px-5 py-2 rounded-lg font-semibold hover:scale-105 transition">
-          <Link to="/ourteam">
+          <Link to="/ourTeam">
           Our Team
           </Link>
         </button>

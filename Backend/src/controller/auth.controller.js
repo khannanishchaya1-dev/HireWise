@@ -5,8 +5,8 @@ const redis = require('../config/redis');
 // Register a new user
 async function register(req,res) {
 try{
-  const {username,email,password}= req.body;
-  if(!username || !email || !password){
+  const {username,email,password,age}= req.body;
+  if(!username || !email || !password || !age){
     return res.status(400).json({message: 'All fields are required'});
   }
   const existingUser = await User.findOne({$or:[{email},{username}]});
@@ -14,7 +14,7 @@ try{
     return res.status(400).json({message: 'Account already exists with this username or email'});
   }
   const hashedPassword = await bcrypt.hash(password, 10);
-  const newUser = await User.create({username,email,password: hashedPassword});
+  const newUser = await User.create({username,email,password: hashedPassword, age});
   if(newUser){
     const token = jwt.sign({id: newUser._id, username: newUser.username, email: newUser.email} , process.env.SECRET_KEY, {expiresIn: '1d'});
     res.cookie('token', token, {

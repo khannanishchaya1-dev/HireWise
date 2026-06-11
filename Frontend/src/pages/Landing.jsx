@@ -8,6 +8,8 @@ import {
   Sparkles,
 } from "lucide-react";
 import Navbar from "../components/Navbar";
+import {Link} from 'react-router-dom';
+
 
 const Landing = () => {
   return (
@@ -46,10 +48,12 @@ const Landing = () => {
             </p>
 
             <div className="flex flex-wrap gap-4 mt-10">
-              <button className="flex items-center gap-2 bg-[#00ED64] text-black px-6 py-3 rounded-xl font-semibold hover:scale-105 transition">
-                Start Free
-                <ArrowRight size={18} />
-              </button>
+              <Link to="/register">
+                <button className="flex items-center gap-2 bg-[#00ED64] text-black px-6 py-3 rounded-xl font-semibold hover:scale-105 transition">
+                  Start Free
+                  <ArrowRight size={18} />
+                </button>
+              </Link>
 
               <button className="border border-gray-700 px-6 py-3 rounded-xl hover:bg-white/5">
                 Watch Demo

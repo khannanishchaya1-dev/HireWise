@@ -1,15 +1,11 @@
-import {
-  GithubIcon,
-  Linkedin,
-  Mail
-} from "lucide-react";
-
+import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
+import Image from "../assets/img.jpg";
 const teamMembers = [
   {
     name: "Nishchaya",
     role: "Founder & Full Stack Developer",
     image:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43f?w=500",
+      Image,
     description:
       "Building AI-powered solutions to help students and professionals prepare for interviews and careers.",
   },
@@ -81,21 +77,21 @@ export default function Team() {
                     href="#"
                     className="p-2 rounded-lg bg-[#001E2B] hover:bg-[#00ED64] hover:text-black transition"
                   >
-                    <Github size={18} />
+                    <FaGithub size5={18} />
                   </a>
 
                   <a
                     href="#"
                     className="p-2 rounded-lg bg-[#001E2B] hover:bg-[#00ED64] hover:text-black transition"
                   >
-                    <Linkedin size={18} />
+                    <FaLinkedin size={18} />
                   </a>
 
                   <a
                     href="#"
                     className="p-2 rounded-lg bg-[#001E2B] hover:bg-[#00ED64] hover:text-black transition"
                   >
-                    <Mail size={18} />
+                    <FaEnvelope size={18} />
                   </a>
                 </div>
               </div>
