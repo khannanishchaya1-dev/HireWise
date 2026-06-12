@@ -1,13 +1,13 @@
 const pdfParse = require('pdf-parse');
 const resumeAnalysisModel = require('../models/resumeAnalysis.model')
 
-const {resumeAnalysisbyAi} = require('../service/aiService'); 
+const {resumeAnalysisbyAi,skillGapDetectionByAi} = require('../service/aiService'); 
 const resumeAnalysis = async (req, res) => {
   try{
 const resumeFile = req.file;
 const resumeContent = await (new pdfParse.PDFParse(Uint8Array.from(resumeFile.buffer))).getText();
 
-const {candidateName,skills, projects,experience,education,strengths,weaknesses,overallScore,atsScore,summary } = await resumeAnalysisbyAi(resumeContent.text);
+const {candidateName,skills, projects,experience,education,strengths,weaknesses,overallScore,atsScore,summary, recommendations } = await resumeAnalysisbyAi(resumeContent.text);
 console.log("Before creating Model");
 console.log(candidateName,
   skills,
@@ -58,6 +58,7 @@ const analysisModel = await resumeAnalysisModel.create({
   atsScore,
 
   summary,
+  recommendations
 });
 console.log("Model Created");
 if(analysisModel){
@@ -70,8 +71,62 @@ if(analysisModel){
 
 
 }
+const skillGapDetection = async (req, res) => {
+  try {
+    const resumeFile = req.file;
+    const { jobDescription } = req.body;
+
+    if (!resumeFile) {
+      return res.status(400).json({
+        success: false,
+        message: "Resume is required",
+      });
+    }
+
+    if (!jobDescription) {
+      return res.status(400).json({
+        success: false,
+        message: "Job Description is required",
+      });
+    }
+
+    const resumeContent = await (
+      new pdfParse.PDFParse(
+        Uint8Array.from(resumeFile.buffer)
+      )
+    ).getText();
+
+    if (!resumeContent.text) {
+      return res.status(400).json({
+        success: false,
+        message: "Unable to extract resume content",
+      });
+    }
+
+    const skillGapAnalysis =
+      await skillGapDetectionByAi(
+        resumeContent.text,
+        jobDescription
+      );
+
+    return res.status(200).json({
+      success: true,
+      skillGapAnalysis,
+    });
+
+  } catch (error) {
+    console.log(error);
+
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 
 
 module.exports={
-  resumeAnalysis
+  resumeAnalysis,
+  skillGapDetection,
 }

@@ -1,5 +1,6 @@
 import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 import Image from "../assets/img.jpg";
+import Krishna from "../assets/Krishna.jpeg"
 const teamMembers = [
   {
     name: "Nishchaya",
@@ -18,10 +19,9 @@ const teamMembers = [
       "Creating beautiful and responsive user experiences.",
   },
   {
-    name: "Team Member",
+    name: "Krishna Sharma",
     role: "AI Engineer",
-    image:
-      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=500",
+    image:Krishna,
     description:
       "Developing intelligent resume analysis and interview systems.",
   },

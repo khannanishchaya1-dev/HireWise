@@ -7,6 +7,9 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import ProtectedRoute from './pages/ProtectedWrapper';
+import ResumeUpload from './pages/ResumeUpload';
+import SkillGap from './pages/SkillGap';
+
 import './App.css'
 
 function App() {
@@ -25,6 +28,22 @@ function App() {
           <Home />
         </ProtectedRoute>
       } />
+      <Route
+  path="/resume-analysis"
+  element={
+    <ProtectedRoute>
+      <ResumeUpload />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/skill-gap"
+  element={
+    <ProtectedRoute>
+      <SkillGap />
+    </ProtectedRoute>
+  }
+/>
      </Routes>
      </>
   )

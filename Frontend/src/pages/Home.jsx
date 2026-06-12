@@ -113,10 +113,11 @@ export default function Home() {
               Upload your resume and extract skills,
               experience, and strengths.
             </p>
-
+            <Link to='/resume-analysis'>
             <button className="mt-4 bg-[#00ED64] text-black px-4 py-2 rounded-lg">
               Analyze Resume
             </button>
+            </Link>
           </div>
 
           <div className="bg-[#112733] p-6 rounded-xl border border-[#1f3a47]">
@@ -127,10 +128,11 @@ export default function Home() {
             <p className="text-gray-400 mt-3">
               Compare your resume with job descriptions.
             </p>
-
+<Link to='/skill-gap'>
             <button className="mt-4 bg-[#00ED64] text-black px-4 py-2 rounded-lg">
               Check Skills
             </button>
+            </Link>
           </div>
 
           <div className="bg-[#112733] p-6 rounded-xl border border-[#1f3a47]">

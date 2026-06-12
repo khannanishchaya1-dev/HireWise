@@ -68,6 +68,11 @@ const resumeAnalysisSchema = new mongoose.Schema(
     summary: {
       type: String,
     },
+    recommendations:[
+      {
+      type:String
+    }
+  ]
   },
   {
     timestamps: true,
