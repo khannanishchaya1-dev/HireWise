@@ -17,9 +17,12 @@ try{
   const newUser = await User.create({username,email,password: hashedPassword, age});
   if(newUser){
     const token = jwt.sign({id: newUser._id, username: newUser.username, email: newUser.email} , process.env.SECRET_KEY, {expiresIn: '1d'});
-    res.cookie('token', token, {
-      httpOnly: true,
-    });
+    res.cookie("token", token, {
+  httpOnly: true,
+  secure: true,
+  sameSite: "none",
+  maxAge: 24 * 60 * 60 * 1000,
+});
     return res.status(201).json({message: 'User registered successfully', token, newUser});
   }
 }catch(error){
@@ -46,9 +49,12 @@ const login = async (req,res)=>{
  
   
   const token = jwt.sign({id: user._id, username: user.username, email: user.email} , process.env.SECRET_KEY, {expiresIn: '1d'});
-  res.cookie('token', token,{
-    httpOnly: true,
-  });
+  res.cookie("token", token, {
+  httpOnly: true,
+  secure: true,
+  sameSite: "none",
+  maxAge: 24 * 60 * 60 * 1000,
+});
   return res.status(200).json({message: 'Login successful', token, user});
 }catch(error){
 return res.status(500).json({message: 'Internal server error'});
@@ -65,7 +71,11 @@ const decoded = jwt.decode(token);
   const expiry =
   decoded.exp - Math.floor(Date.now() / 1000);
 await redis.set(`blacklist_${token}`,"true",{ex:expiry});
-res.clearCookie('token');
+res.clearCookie("token", {
+  httpOnly: true,
+  secure: true,
+  sameSite: "none",
+});
 return res.status(200).json({message: 'Logout successful'});
   }catch(error){
     console.error('Error during logout:', error);
