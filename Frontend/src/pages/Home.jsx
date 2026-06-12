@@ -2,9 +2,11 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../context/UserContext";
-import { FaUserCircle } from "react-icons/fa";
+
 import { useState } from "react";
 import { useEffect } from "react";
+import { toast } from "react-hot-toast";
+import MainNavbar from "../components/MainNavbar";
 
 
 export default function Home() {
@@ -29,54 +31,26 @@ export default function Home() {
     const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/auth/logout`,{
       withCredentials:true
     });
+    console.log(response.status);
     if(response.status === 200){
-    
+    toast.success("Logout successful!");
     setUser(null);
     navigate("/login");
     }
   }catch(error){
-    console.log(error.response?.data?.message);
+    toast.error("Logout failed");
   }
   }
   return (
     <div className="min-h-screen bg-[#001E2B] text-white">
       {/* Navbar */}
       <nav className="border-b border-[#1f3a47]">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold">
-            Hire<span className="text-[#00ED64]">Wise</span>
-          </h1>
-
-          <div className="relative">
-  <button
-    onClick={() => setOpen(!open)}
-    className="text-3xl text-white hover:text-[#00ED64]"
-  >
-    <FaUserCircle />
-  </button>
-
-  {open && (
-    <div className="absolute right-0 mt-3 w-56 bg-[#112733] border border-[#1f3a47] rounded-xl shadow-lg overflow-hidden">
-      <div className="px-4 py-3 border-b border-[#1f3a47]">
-        <p className="text-white font-semibold">
-          {user?.username}
-        </p>
-
-        <p className="text-gray-400 text-sm">
-          {user?.email}
-        </p>
-      </div>
-
-      <button
-        onClick={handleLogout}
-        className="w-full text-left px-4 py-3 text-red-400 hover:bg-[#0D2530]"
-      >
-        Logout
-      </button>
-    </div>
-  )}
-</div>
-        </div>
+        <MainNavbar 
+          open={open}
+          setOpen={setOpen}
+          user={user}
+          handleLogout={handleLogout}
+        />
       </nav>
 
       {/* Welcome Section */}
