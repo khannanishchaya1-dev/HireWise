@@ -205,7 +205,6 @@ ${jobDescription}
         },
       });
 
-    console.log(response.text);
 
     return JSON.parse(response.text);
 
@@ -215,5 +214,99 @@ ${jobDescription}
   }
 }
 
-module.exports = { invokeAiService, resumeAnalysisbyAi,skillGapDetectionByAi };
+const interviewQuestionSchema = z.object({
+  role: z.string(),
+
+  difficulty: z.string(),
+
+  technicalQuestions: z.array(
+    z.string()
+  ),
+
+  behavioralQuestions: z.array(
+    z.string()
+  ),
+
+  projectQuestions: z.array(
+    z.string()
+  ),
+
+  hrQuestions: z.array(
+    z.string()
+  ),
+
+  tips: z.array(
+    z.string()
+  ),
+});
+async function generateInterviewQuestions(
+  resume,
+  role,
+  difficulty,
+  interviewType,
+  companyType
+)  {
+  try {
+    const prompt = `
+Generate interview questions based on the candidate's resume.
+
+Role:
+${role}
+
+Difficulty:
+${difficulty}
+
+Interview Type:
+${interviewType}
+
+Company Type:
+${companyType}
+
+Instructions:
+
+- If interview type is Technical, focus mainly on technical and project questions.
+- If interview type is HR, focus mainly on HR and behavioral questions.
+- If interview type is Mixed, generate all categories.
+
+- If company type is Product Based, include DSA, system design, scalability and deep technical questions.
+- If company type is Startup, focus on practical development, projects and problem solving.
+- If company type is Service Based, focus on fundamentals, communication and client-facing scenarios.
+
+Provide:
+- role
+- difficulty
+- technicalQuestions
+- projectQuestions
+- behavioralQuestions
+- hrQuestions
+- interviewTips
+
+Resume:
+${resume}
+`;
+
+    const response =
+      await aiService.models.generateContent({
+        model: "gemini-2.5-flash-lite",
+
+        contents: prompt,
+
+        config: {
+          responseMimeType:
+            "application/json",
+
+          responseSchema:
+            zodToJsonSchema(
+              interviewQuestionSchema
+            ),
+        },
+      });
+
+    return JSON.parse(response.text);
+
+  } catch (error) {
+    throw error;
+  }
+}
+module.exports = { invokeAiService, resumeAnalysisbyAi,skillGapDetectionByAi,generateInterviewQuestions };
 

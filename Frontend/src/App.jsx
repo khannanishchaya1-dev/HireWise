@@ -10,6 +10,8 @@ import ProtectedRoute from './pages/ProtectedWrapper';
 import ResumeUpload from './pages/ResumeUpload';
 import SkillGap from './pages/SkillGap';
 import Features from './pages/Features';
+import PreviousAnalyses from './pages/PreviousAnalyses';
+import FindInterviewQ from './pages/FindInterviewQ';
 
 import './App.css'
 
@@ -47,6 +49,14 @@ function App() {
   }
 />
 <Route
+  path="/interview-preparation"
+  element={
+    <ProtectedRoute>
+      <FindInterviewQ />
+    </ProtectedRoute>
+  }
+/>
+<Route
   path="/features"
   element={
     
@@ -54,6 +64,7 @@ function App() {
     
   }
 />
+<Route path="/previous-analyses" element={<PreviousAnalyses/>}/>
      </Routes>
      </>
   )

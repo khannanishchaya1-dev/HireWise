@@ -13,6 +13,32 @@ export default function Home() {
   const [open, setOpen] = useState(false);
   const { user, setUser } = useUser();
   const navigate = useNavigate();
+  const [stats, setStats] = useState({
+  totalResumeAnalyses: 0,
+  totalSkills: 0,
+  averageATSScore: 0,
+  bestATSScore: 0,
+});
+useEffect(() => {
+  const fetchDashboardStats = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/features/get-stats`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      if (response.data.success) {
+        setStats(response.data.stats);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  fetchDashboardStats();
+}, []);
 
 
   useEffect(() => {
@@ -56,7 +82,7 @@ export default function Home() {
       {/* Welcome Section */}
       <section className="max-w-7xl mx-auto px-6 py-10">
         <h2 className="text-4xl font-bold">
-          Welcome Back 👋
+          Welcome Back, {user?.username} 👋
         </h2>
 
         <p className="text-gray-400 mt-2">
@@ -65,42 +91,48 @@ export default function Home() {
 
         {/* Stats */}
         <div className="grid md:grid-cols-4 gap-6 mt-10">
-          <div className="bg-[#112733] p-6 rounded-xl border border-[#1f3a47]">
-            <h3 className="text-[#00ED64] text-3xl font-bold">
-              12
-            </h3>
-            <p className="text-gray-400 mt-2">
-              Resumes Analyzed
-            </p>
-          </div>
 
-          <div className="bg-[#112733] p-6 rounded-xl border border-[#1f3a47]">
-            <h3 className="text-[#00ED64] text-3xl font-bold">
-              45
-            </h3>
-            <p className="text-gray-400 mt-2">
-              Interview Questions
-            </p>
-          </div>
+  <div className="bg-[#112733] p-6 rounded-xl border border-[#1f3a47]">
+    <h3 className="text-[#00ED64] text-3xl font-bold">
+      {stats.totalResumeAnalyses}
+    </h3>
 
-          <div className="bg-[#112733] p-6 rounded-xl border border-[#1f3a47]">
-            <h3 className="text-[#00ED64] text-3xl font-bold">
-              8
-            </h3>
-            <p className="text-gray-400 mt-2">
-              Skill Gaps Found
-            </p>
-          </div>
+    <p className="text-gray-400 mt-2">
+      Total Analyses
+    </p>
+  </div>
 
-          <div className="bg-[#112733] p-6 rounded-xl border border-[#1f3a47]">
-            <h3 className="text-[#00ED64] text-3xl font-bold">
-              92%
-            </h3>
-            <p className="text-gray-400 mt-2">
-              Resume Match Score
-            </p>
-          </div>
-        </div>
+  <div className="bg-[#112733] p-6 rounded-xl border border-[#1f3a47]">
+    <h3 className="text-[#00ED64] text-3xl font-bold">
+      {stats.averageATSScore}%
+    </h3>
+
+    <p className="text-gray-400 mt-2">
+      Average ATS Score
+    </p>
+  </div>
+
+  <div className="bg-[#112733] p-6 rounded-xl border border-[#1f3a47]">
+    <h3 className="text-[#00ED64] text-3xl font-bold">
+      {stats.bestATSScore}%
+    </h3>
+
+    <p className="text-gray-400 mt-2">
+      Best ATS Score
+    </p>
+  </div>
+
+  <div className="bg-[#112733] p-6 rounded-xl border border-[#1f3a47]">
+    <h3 className="text-[#00ED64] text-3xl font-bold">
+      {stats.totalSkills}
+    </h3>
+
+    <p className="text-gray-400 mt-2">
+      Unique Skills Found
+    </p>
+  </div>
+
+</div>
 
         {/* Main Features */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
@@ -143,53 +175,81 @@ export default function Home() {
             <p className="text-gray-400 mt-3">
               Generate personalized interview questions.
             </p>
-
+            <Link to='/interview-preparation'>
             <button className="mt-4 bg-[#00ED64] text-black px-4 py-2 rounded-lg">
               Generate Questions
             </button>
+            </Link>
           </div>
 
-          <div className="bg-[#112733] p-6 rounded-xl border border-[#1f3a47]">
-            <h3 className="text-xl font-semibold">
-              ATS Resume Builder
-            </h3>
+         <div className="bg-[#112733] p-6 rounded-xl border border-[#1f3a47] relative">
+  <span className="absolute top-4 right-4 bg-yellow-500/20 text-yellow-400 text-xs px-3 py-1 rounded-full">
+    Coming Soon
+  </span>
 
-            <p className="text-gray-400 mt-3">
-              Create ATS-friendly resumes instantly.
-            </p>
+  <h3 className="text-xl font-semibold">
+    Progress Tracker
+  </h3>
 
-            <button className="mt-4 bg-[#00ED64] text-black px-4 py-2 rounded-lg">
-              Build Resume
-            </button>
-          </div>
+  <p className="text-gray-400 mt-3">
+    Monitor your interview preparation journey,
+    track improvements in ATS scores, skill gaps,
+    and overall readiness over time.
+  </p>
 
-          <div className="bg-[#112733] p-6 rounded-xl border border-[#1f3a47]">
-            <h3 className="text-xl font-semibold">
-              Mock Interviews
-            </h3>
+  <button
+    disabled
+    className="mt-4 bg-gray-700 text-gray-400 px-4 py-2 rounded-lg cursor-not-allowed"
+  >
+    Upcoming Feature
+  </button>
+</div>
 
-            <p className="text-gray-400 mt-3">
-              Practice interview rounds with AI.
-            </p>
+<div className="bg-[#112733] p-6 rounded-xl border border-[#1f3a47] relative">
+  <span className="absolute top-4 right-4 bg-yellow-500/20 text-yellow-400 text-xs px-3 py-1 rounded-full">
+    Coming Soon
+  </span>
 
-            <button className="mt-4 bg-[#00ED64] text-black px-4 py-2 rounded-lg">
-              Start Interview
-            </button>
-          </div>
+  <h3 className="text-xl font-semibold">
+    Mock Interviews
+  </h3>
 
-          <div className="bg-[#112733] p-6 rounded-xl border border-[#1f3a47]">
-            <h3 className="text-xl font-semibold">
-              Progress Tracker
-            </h3>
+  <p className="text-gray-400 mt-3">
+    Experience realistic interview simulations
+    with AI-generated follow-up questions and
+    feedback tailored to your target role.
+  </p>
 
-            <p className="text-gray-400 mt-3">
-              Monitor your preparation progress.
-            </p>
+  <button
+    disabled
+    className="mt-4 bg-gray-700 text-gray-400 px-4 py-2 rounded-lg cursor-not-allowed"
+  >
+    Upcoming Feature
+  </button>
+</div>
 
-            <button className="mt-4 bg-[#00ED64] text-black px-4 py-2 rounded-lg">
-              View Progress
-            </button>
-          </div>
+<div className="bg-[#112733] p-6 rounded-xl border border-[#1f3a47] relative">
+  <span className="absolute top-4 right-4 bg-yellow-500/20 text-yellow-400 text-xs px-3 py-1 rounded-full">
+    Coming Soon
+  </span>
+
+  <h3 className="text-xl font-semibold">
+    ATS Resume Builder
+  </h3>
+
+  <p className="text-gray-400 mt-3">
+    Build recruiter-friendly resumes using
+    professional templates optimized for
+    Applicant Tracking Systems.
+  </p>
+
+  <button
+    disabled
+    className="mt-4 bg-gray-700 text-gray-400 px-4 py-2 rounded-lg cursor-not-allowed"
+  >
+    Upcoming Feature
+  </button>
+</div>
         </div>
       </section>
     </div>
