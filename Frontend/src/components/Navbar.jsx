@@ -10,7 +10,7 @@ const Navbar = () => {
         </h1>
 
         <div className="hidden md:flex gap-8 text-gray-300">
-          <a href="#">Features</a>
+          <Link to="/features">Features</Link>
           <a href="#">How It Works</a>
           <a href="#">Testimonials</a>
           <a href="#">Contact</a>

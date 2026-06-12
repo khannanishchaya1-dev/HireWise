@@ -9,8 +9,10 @@ import Home from './pages/Home';
 import ProtectedRoute from './pages/ProtectedWrapper';
 import ResumeUpload from './pages/ResumeUpload';
 import SkillGap from './pages/SkillGap';
+import Features from './pages/Features';
 
 import './App.css'
+
 
 function App() {
   
@@ -42,6 +44,14 @@ function App() {
     <ProtectedRoute>
       <SkillGap />
     </ProtectedRoute>
+  }
+/>
+<Route
+  path="/features"
+  element={
+    
+      <Features />
+    
   }
 />
      </Routes>
