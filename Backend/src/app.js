@@ -6,7 +6,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://hire-wise-alpha.vercel.app"
+      "https://hire-wise-omega.vercel.app"
     ],
     credentials: true,
   })
