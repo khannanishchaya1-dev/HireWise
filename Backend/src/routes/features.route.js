@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const authMiddleware = require('../middleware/auth.middleware');
-const {resumeAnalysis,skillGapDetection,getPreviousAnalyses,generateInterviewQuestionsController,getDashboardStats}=require('../controller/feature.controller');
+const {resumeAnalysis,skillGapDetection,getPreviousAnalyses,generateInterviewQuestionsController,getDashboardStats,buildResume}=require('../controller/feature.controller');
 const upload = require('../middleware/file.middleware');
 router.post('/resume-analysis',authMiddleware, upload.single('resume'), resumeAnalysis);
 router.post(
@@ -17,4 +17,9 @@ router.get(
 );
 router.post("/interview-questions",authMiddleware,upload.single("resume"),generateInterviewQuestionsController);
 router.get("/get-stats",authMiddleware,getDashboardStats);
+router.get(
+  "/build-resume/:id",
+  authMiddleware,
+  buildResume
+);
 module.exports = router;

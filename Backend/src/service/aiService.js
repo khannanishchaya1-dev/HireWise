@@ -51,6 +51,9 @@ async function resumeAnalysisbyAi(resume){
   try{
  
 const prompt = `
+You are a JSON API.
+
+Return ONLY valid JSON.
 Analyze the resume and Provide according to following Schema.
 
 
@@ -60,8 +63,34 @@ Provide:
 - skills
 - strengths
 - weaknesses
-- projects
-- education
+- projects must be:
+
+[
+  {
+    "name": "Project Name",
+    "description": "Project Description"
+  }
+]
+
+-education must be:
+
+[
+  {
+    "institute": "Institute Name",
+    "degree": "Degree Name",
+    "year": "2027"
+  }
+]
+
+-experience must be:
+
+[
+  {
+    "company": "Company Name",
+    "role": "Role",
+    "duration": "1 year"
+  }
+]
 - experience
 - atsScore
 - overallScore
@@ -69,20 +98,31 @@ Provide:
 
 Resume:
 ${resume}
+
 `;
-console.log("Before");
 const response = await aiService.models.generateContent({
   model: "gemini-2.5-flash-lite",
   contents: prompt,
   config:{
-    responseMimeType: "application/json",
-    responseSchema: zodToJsonSchema(resumeAnalysisSchema),
+    responseFormat: { text: { mimeType: "application/json", schema: zodToJsonSchema(resumeAnalysisSchema) } },
   }
 
 })
-console.log(response.text);
+let text = response.text.trim();
 
-return JSON.parse(response.text);
+if (text.startsWith("```json")) {
+  text = text
+    .replace(/^```json\s*/, "")
+    .replace(/\s*```$/, "");
+}
+
+const parsed = JSON.parse(text);
+
+console.log(parsed);
+
+return parsed;
+
+return analysis;
   }catch(error){
     console.log(error);
     throw error;

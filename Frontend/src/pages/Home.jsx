@@ -183,26 +183,28 @@ useEffect(() => {
           </div>
 
          <div className="bg-[#112733] p-6 rounded-xl border border-[#1f3a47] relative">
-  <span className="absolute top-4 right-4 bg-yellow-500/20 text-yellow-400 text-xs px-3 py-1 rounded-full">
-    Coming Soon
+          <span className="absolute top-4 right-4 bg-yellow-500/20 text-yellow-400 text-xs px-3 py-1 rounded-full">
+    Newly Launched
   </span>
 
   <h3 className="text-xl font-semibold">
-    Progress Tracker
+    ATS Resume Builder
   </h3>
 
   <p className="text-gray-400 mt-3">
-    Monitor your interview preparation journey,
-    track improvements in ATS scores, skill gaps,
-    and overall readiness over time.
+    Build recruiter-friendly resumes using
+    professional templates optimized for
+    Applicant Tracking Systems.
   </p>
-
+<Link to='/previous-analyses'>
   <button
-    disabled
-    className="mt-4 bg-gray-700 text-gray-400 px-4 py-2 rounded-lg cursor-not-allowed"
+    
+    className="mt-4 bg-[#00ED64] text-black px-4 py-2 rounded-lg "
   >
-    Upcoming Feature
+    Build Resume
   </button>
+  </Link>
+ 
 </div>
 
 <div className="bg-[#112733] p-6 rounded-xl border border-[#1f3a47] relative">
@@ -229,18 +231,18 @@ useEffect(() => {
 </div>
 
 <div className="bg-[#112733] p-6 rounded-xl border border-[#1f3a47] relative">
-  <span className="absolute top-4 right-4 bg-yellow-500/20 text-yellow-400 text-xs px-3 py-1 rounded-full">
+   <span className="absolute top-4 right-4 bg-yellow-500/20 text-yellow-400 text-xs px-3 py-1 rounded-full">
     Coming Soon
   </span>
 
   <h3 className="text-xl font-semibold">
-    ATS Resume Builder
+    Progress Tracker
   </h3>
 
   <p className="text-gray-400 mt-3">
-    Build recruiter-friendly resumes using
-    professional templates optimized for
-    Applicant Tracking Systems.
+    Monitor your interview preparation journey,
+    track improvements in ATS scores, skill gaps,
+    and overall readiness over time.
   </p>
 
   <button
@@ -255,3 +257,5 @@ useEffect(() => {
     </div>
   );
 }
+
+

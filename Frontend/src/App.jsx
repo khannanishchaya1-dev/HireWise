@@ -12,6 +12,8 @@ import SkillGap from './pages/SkillGap';
 import Features from './pages/Features';
 import PreviousAnalyses from './pages/PreviousAnalyses';
 import FindInterviewQ from './pages/FindInterviewQ';
+import ResumeBuilder from './pages/ResumeBuilder';
+import Working from './pages/Working'
 
 import './App.css'
 
@@ -65,6 +67,22 @@ function App() {
   }
 />
 <Route path="/previous-analyses" element={<PreviousAnalyses/>}/>
+<Route
+  path="/resume-builder/:id"
+  element={
+    <ProtectedRoute>
+      <ResumeBuilder />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/how-it-works"
+  element={
+    <ProtectedRoute>
+      <Working />
+    </ProtectedRoute>
+  }
+/>
      </Routes>
      </>
   )

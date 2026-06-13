@@ -11,7 +11,7 @@ const Navbar = () => {
 
         <div className="hidden md:flex gap-8 text-gray-300">
           <Link to="/features">Features</Link>
-          <a href="#">How It Works</a>
+          <Link to='/how-it-works'>How It Works</Link>
           <a href="#">Testimonials</a>
           <a href="#">Contact</a>
         </div>

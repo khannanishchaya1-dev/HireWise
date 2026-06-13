@@ -1,5 +1,5 @@
 import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
-import Image from "../assets/img.jpg";
+import Image from "../assets/nish.jpeg";
 import Krishna from "../assets/Krishna.jpeg"
 const teamMembers = [
   {
