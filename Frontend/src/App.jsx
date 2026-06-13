@@ -14,6 +14,8 @@ import PreviousAnalyses from './pages/PreviousAnalyses';
 import FindInterviewQ from './pages/FindInterviewQ';
 import ResumeBuilder from './pages/ResumeBuilder';
 import Working from './pages/Working'
+import Testimonial from './pages/Testinomial';
+import Contact from './pages/Contact';
 
 import './App.css'
 
@@ -80,6 +82,23 @@ function App() {
   element={
     <ProtectedRoute>
       <Working />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/testimonial"
+  element={
+    <ProtectedRoute>
+      <Testimonial />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/contact"
+  element={
+    <ProtectedRoute>
+      <Contact />
     </ProtectedRoute>
   }
 />
