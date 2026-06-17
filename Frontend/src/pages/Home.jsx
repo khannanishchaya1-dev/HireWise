@@ -185,7 +185,7 @@ export default function Home() {
             <p className="text-gray-400 mt-3 text-sm flex-grow">
               Build recruiter-friendly resumes using professional templates optimized for Applicant Tracking Systems.
             </p>
-            <Link to="/previous-analyses">
+            <Link to="/form">
               <button className="mt-4 w-full bg-[#00ED64] text-black px-4 py-2 rounded-lg font-medium hover:bg-[#00d456] transition-colors">
                 Build Resume
               </button>

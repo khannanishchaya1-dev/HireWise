@@ -16,8 +16,11 @@ import ResumeBuilder from './pages/ResumeBuilder';
 import Working from './pages/Working'
 import Testimonial from './pages/Testinomial';
 import Contact from './pages/Contact';
-
+import Form from './pages/Form';
+import TemplateSelection from './pages/TemplateSelection'
+import ATSProfessional from './pages/templates/ATSprofessional';
 import './App.css'
+import ModernDeveloper from './pages/templates/ModernDeveloper';
 
 
 function App() {
@@ -101,6 +104,31 @@ function App() {
       <Contact />
     </ProtectedRoute>
   }
+/>
+<Route
+  path="/form"
+  element={
+    <ProtectedRoute>
+      <Form />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/resume/templates"
+  element={
+    <ProtectedRoute>
+      <TemplateSelection />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/resume/ats-template"
+  element={<ATSProfessional />}
+/>
+
+<Route
+  path="/resume/modern-template"
+  element={<ModernDeveloper />}
 />
      </Routes>
      </>
